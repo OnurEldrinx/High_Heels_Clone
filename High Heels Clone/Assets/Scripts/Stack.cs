@@ -12,11 +12,14 @@ public class Stack : MonoBehaviour
     public Transform leftPrevious;
     public Transform rightPrevious;
 
-    public int stackOffset = 175; 
+    public int stackOffset;
 
-    public List<Transform> heelsOnPlayer;
+    public List<Transform> leftHeelsOnPlayer;
+    public List<Transform> rightHeelsOnPlayer;
 
-   
+    public int lastActiveIndex;
+
+
 
 
     private void Awake()
@@ -29,6 +32,7 @@ public class Stack : MonoBehaviour
 
         }
 
+
     }
 
 
@@ -36,14 +40,18 @@ public class Stack : MonoBehaviour
     void Start()
     {
 
-        stackOffset = 175;
+        lastActiveIndex = -1;
+
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+
+
     }
 
     

@@ -9,16 +9,22 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     public float xBound;
 
-    private float colliderOffset = 0.2f;
+    public float colliderOffset;
 
-    private BoxCollider playerCollider;
+    public BoxCollider playerCollider;
+
+    public bool isOnPipeObstacle;
+
+    
+
 
     // Start is called before the first frame update
     void Start()
     {
 
         playerCollider = GetComponent<BoxCollider>();
-        colliderOffset = 0.2f;
+        colliderOffset = 0.235f;
+        
 
     }
 
@@ -28,7 +34,9 @@ public class PlayerController : MonoBehaviour
 
 
         Move();
-        ResetPosition();
+        
+        if(!isOnPipeObstacle)
+            ResetPosition();
 
     }
 
@@ -72,31 +80,82 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Shoes")
         {
 
+
             other.gameObject.SetActive(false);
 
-            GameObject l = ObjectPool.Instance.GetPooledObject("L");
-            
+            Stack.Instance.leftHeelsOnPlayer[Stack.Instance.lastActiveIndex + 1].gameObject.SetActive(true);
+            Stack.Instance.rightHeelsOnPlayer[Stack.Instance.lastActiveIndex + 1].gameObject.SetActive(true);
 
-            l.transform.parent = Stack.Instance.leftPrevious;
-            l.transform.localPosition = Stack.Instance.leftPrevious.position + (Vector3.forward * Stack.Instance.stackOffset);
-            l.transform.rotation = Stack.Instance.leftPrevious.rotation;
-            l.SetActive(true);
-
-            Stack.Instance.leftPrevious = l.transform;
-
-            GameObject r = ObjectPool.Instance.GetPooledObject("R");
-
-            r.transform.parent = Stack.Instance.rightPrevious;
-            r.transform.localPosition = Stack.Instance.rightPrevious.position + (Vector3.forward * Stack.Instance.stackOffset);
-            r.transform.rotation = Stack.Instance.rightPrevious.rotation;
-            r.SetActive(true);
-
-            Stack.Instance.rightPrevious= r.transform;
+            Stack.Instance.lastActiveIndex++;
 
             playerCollider.center = new Vector3(playerCollider.center.x,playerCollider.center.y-colliderOffset);
 
 
         }
+        else if (other.tag == "Diamond")
+        {
+
+            other.gameObject.SetActive(false);
+            GameManager.Instance.diamondScore++;
+
+        }
+        else if(other.tag == "B_Enter")
+        {
+
+            isOnPipeObstacle = true;
+            GetComponent<BoxCollider>().isTrigger = true;
+            GetComponent<Animator>().Play("Spagat");
+            
+
+        }
+        else if (other.tag == "2")
+        {
+
+            GameManager.Instance.diamondScore *= int.Parse(other.tag);
+
+        }
+        else if (other.tag == "3")
+        {
+
+            GameManager.Instance.diamondScore *= int.Parse(other.tag);
+
+        }
+        else if (other.tag == "4")
+        {
+
+            GameManager.Instance.diamondScore *= int.Parse(other.tag);
+
+        }
+        else if (other.tag == "5")
+        {
+
+            GameManager.Instance.diamondScore *= int.Parse(other.tag);
+
+        }
+        else if (other.tag == "6")
+        {
+
+            GameManager.Instance.diamondScore *= int.Parse(other.tag);
+
+        }
+
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+
+        if (other.tag == "B_Exit")
+        {
+            isOnPipeObstacle = false;
+            GetComponent<BoxCollider>().isTrigger = false;
+            GetComponent<Animator>().Play("Catwalk");
+        }
+
+
+    }
+
+    
+
+    
 
 }

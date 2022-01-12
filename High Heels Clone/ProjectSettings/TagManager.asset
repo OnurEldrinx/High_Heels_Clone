@@ -5,6 +5,18 @@ TagManager:
   serializedVersion: 2
   tags:
   - Shoes
+  - Obstacle
+  - Heel
+  - Diamond
+  - Left Heel
+  - Right Heel
+  - B_Enter
+  - B_Exit
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
   layers:
   - Default
   - TransparentFX

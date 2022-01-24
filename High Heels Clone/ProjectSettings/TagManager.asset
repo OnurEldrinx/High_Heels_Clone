@@ -17,6 +17,8 @@ TagManager:
   - 4
   - 5
   - 6
+  - FinishLine
+  - Head
   layers:
   - Default
   - TransparentFX

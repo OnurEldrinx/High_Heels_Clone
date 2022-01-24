@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
 
     public bool isOnPipeObstacle;
 
+    public int collisionCounter = 0;
+    
+
     
 
 
@@ -32,8 +35,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
+        if (GameManager.isGameEnded == false && !GameManager.Instance.isFailed)
+        {
 
-        Move();
+            Move();
+
+        }
+
+        if (GameManager.isGameEnded || GameManager.Instance.isFailed)
+        {
+
+            GetComponent<Animator>().enabled = false;
+
+        }
+        
+            
         
         if(!isOnPipeObstacle)
             ResetPosition();
@@ -108,35 +124,72 @@ public class PlayerController : MonoBehaviour
             
 
         }
-        else if (other.tag == "2")
+        else if (other.tag == "FinishLine")
         {
 
-            GameManager.Instance.diamondScore *= int.Parse(other.tag);
+            GameManager.Instance.isLevelFinished = true;
 
         }
-        else if (other.tag == "3")
+        else if (other.tag == "2" && !GameManager.isGameEnded && !GameManager.Instance.isFailed)
+        {
+            collisionCounter++;
+
+            Debug.Log(2);
+
+            if (collisionCounter == 1)
+            {
+                GameManager.Instance.diamondScore *= int.Parse(other.tag);
+            }
+        }
+        else if (other.tag == "3" && !GameManager.isGameEnded && !GameManager.Instance.isFailed)
         {
 
-            GameManager.Instance.diamondScore *= int.Parse(other.tag);
+            collisionCounter++;
+
+            Debug.Log(3);
+
+            if (collisionCounter == 2)
+            {
+                GameManager.Instance.diamondScore *= int.Parse(other.tag);
+            }
+        }
+        else if (other.tag == "4" && !GameManager.isGameEnded && !GameManager.Instance.isFailed)
+        {
+
+            collisionCounter++;
+
+            Debug.Log(4);
+
+            if (collisionCounter == 3)
+            {
+                GameManager.Instance.diamondScore *= int.Parse(other.tag);
+            }
 
         }
-        else if (other.tag == "4")
+        else if (other.tag == "5" && !GameManager.isGameEnded && !GameManager.Instance.isFailed)
         {
 
-            GameManager.Instance.diamondScore *= int.Parse(other.tag);
+            collisionCounter++;
+
+            Debug.Log(5);
+
+            if (collisionCounter == 4)
+            {
+                GameManager.Instance.diamondScore *= int.Parse(other.tag);
+            }
 
         }
-        else if (other.tag == "5")
+        else if (other.tag == "6" && !GameManager.isGameEnded && !GameManager.Instance.isFailed)
         {
 
-            GameManager.Instance.diamondScore *= int.Parse(other.tag);
+            collisionCounter++;
 
-        }
-        else if (other.tag == "6")
-        {
+            Debug.Log(6);
 
-            GameManager.Instance.diamondScore *= int.Parse(other.tag);
-
+            if (collisionCounter == 5)
+            {
+                GameManager.Instance.diamondScore *= int.Parse(other.tag);
+            }
         }
 
     }

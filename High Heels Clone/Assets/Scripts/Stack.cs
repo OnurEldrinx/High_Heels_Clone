@@ -50,7 +50,13 @@ public class Stack : MonoBehaviour
     void Update()
     {
 
+        if (GameManager.Instance.isFailed && GameManager.Instance.isLevelFinished)
+        {
 
+            GameManager.isGameEnded = true;
+
+
+        }
 
     }
 

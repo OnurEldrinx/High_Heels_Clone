@@ -11,14 +11,17 @@ public class GameManager : MonoBehaviour
 
     public static bool isGameStarted;
     public static bool isGameEnded;
-
+    public bool isLevelFinished;
+    public bool isFailed;
 
     public string levelName;
     public int diamondScore;
 
     public Text levelNumberText;
     public Text diamondScoreText;
-    
+
+    public Button restartButton;
+    public Button nextButton;
 
     private void Awake()
     {
@@ -37,7 +40,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        isGameEnded = false;
 
         levelName = SceneManager.GetActiveScene().name;
 
@@ -55,6 +58,18 @@ public class GameManager : MonoBehaviour
 
         diamondScoreText.text = "" + diamondScore;
 
+        if (isGameEnded)
+        {
+
+            restartButton.gameObject.SetActive(true);
+            nextButton.gameObject.SetActive(true);
+
+        }else if (isFailed)
+        {
+
+            restartButton.gameObject.SetActive(true);
+
+        }
 
     }
 
@@ -85,4 +100,32 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+    public void RestartLevel()
+    {
+
+        
+        Debug.Log("Restart");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        isFailed = false;
+        isGameEnded = false;
+        isGameStarted = false;
+        isLevelFinished = false;
+
+
+
+    }
+
+    public void NextLevel()
+    {
+
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("Next");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        isFailed = false;
+        isGameEnded = false;
+        isGameStarted = false;
+        isLevelFinished = false;
+    }
+
 }
